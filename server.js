@@ -77,7 +77,7 @@ function walk() {
                         } else {
                             console.log("submitting "+jsonpath+" for user "+folder.user);
                             try {
-                                submit(jsondir, jsonpath);
+                                submit(folder, jsonpath);
                             } catch(e) {
                                 console.log("exception thrown:"+e);
                                 console.dir(jsonpath);
@@ -111,8 +111,10 @@ watchr.watch({
 });
 */
 
-function submit(dir, jsonpath) {
+//function submit(dir, jsonpath, user) {
+function submit(folder, jsonpath) {
     var current_status = null;
+    var jsondir = path.dirname(jsonpath);
 
     function status(newstatus, msg) {
         if(current_status == null) {
@@ -129,7 +131,7 @@ function submit(dir, jsonpath) {
         if(msg) {
             var now = new Date();
             var log = newstatus+' '+now.toString()+' '+msg;
-            fs.appendFile(dir+'/osg.log', log+'\n', function (err) {
+            fs.appendFile(jsondir+'/osg.log', log+'\n', function (err) {
                 if (err) throw err;
                 console.log(now.toString()+' '+newstatus+' '+msg);
             });
@@ -140,7 +142,10 @@ function submit(dir, jsonpath) {
     try {
         //parse osg.json
         var json = JSON.parse(fs.readFileSync(jsonpath));
-        console.dir(json);
+        //console.dir(json);
+
+        //inject some other params (anti-patter?)
+        json.user = folder.user;
 
         //figure which service to run
         var service = null;
@@ -156,7 +161,7 @@ function submit(dir, jsonpath) {
             status("RECEIVED", "osg.json received");
 
             //run service
-            service.submit(dir, json, status, function(err){
+            service.submit(jsondir, json, status, function(err){
                 if(err) {
                     status("FAILED", "service finished with failure.");
                 } else {

@@ -9,7 +9,6 @@ exports.submit = function(dir, options, status, done) {
     console.log("blast job starting");
 
     var config = merge(options, {
-        project: "IU-GALAXY",
         rundir: dir,
     });
     osgblast.run(config, status).then(function() {

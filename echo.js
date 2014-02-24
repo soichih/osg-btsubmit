@@ -10,7 +10,7 @@ exports.submit = function(dir, options, status, done) {
         timeout: 60*1000, //kill job in 60 seconds
         arguments: [options.input],
         condor: {
-            "+ProjectName": "CSIU"
+            "+ProjectName": options.project
         },
         rundir: function(rundir, done) {
             console.log("setting up "+rundir);

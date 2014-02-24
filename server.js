@@ -146,6 +146,7 @@ function submit(folder, jsonpath) {
 
         //inject some other params (anti-patter?)
         json.user = folder.user;
+        json.project = config.project;
 
         //figure which service to run
         var service = null;

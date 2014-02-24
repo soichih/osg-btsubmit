@@ -4,4 +4,4 @@ bin/nohup.out
 bin/.sync
 bin/btsync.conf
 config.json
-
+nohup.out

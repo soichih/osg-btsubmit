@@ -117,23 +117,26 @@ function submit(folder, jsonpath) {
     var jsondir = path.dirname(jsonpath);
 
     function status(newstatus, msg) {
-        if(current_status == null) {
-            //console.log("setting initial status to "+newstatus);
-            fs.renameSync(jsonpath, jsonpath+"."+newstatus);
-        } else if(current_status != newstatus) {
-            //console.log("change status from "+current_status+" to "+newstatus);
-            fs.renameSync(jsonpath+"."+current_status, jsonpath+"."+newstatus);
-        } else {
-            //status hasn't changed
+        if(newstatus != null) {
+            if(current_status == null) {
+                //console.log("setting initial status to "+newstatus);
+                fs.renameSync(jsonpath, jsonpath+"."+newstatus);
+            } else if(current_status != newstatus) {
+                //console.log("change status from "+current_status+" to "+newstatus);
+                fs.renameSync(jsonpath+"."+current_status, jsonpath+"."+newstatus);
+            } else {
+                //status hasn't changed
+            }
+            current_status = newstatus;
         }
-        current_status = newstatus;
 
         if(msg) {
             var now = new Date();
-            var log = newstatus+' '+now.toString()+' '+msg;
+            var log = current_status+' '+now.toString()+' '+msg;
             fs.appendFile(jsondir+'/osg.log', log+'\n', function (err) {
                 if (err) throw err;
-                console.log(now.toString()+' '+newstatus+' '+msg);
+                console.log(log);
+
             });
         }
     }

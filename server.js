@@ -92,14 +92,7 @@ function walk() {
 
 //walk periodically to find run.json
 var walker = setInterval(walk, 2500);
-process.on('SIGINT', function() {
-    console.log("osg-btsubmit received SIGINT");
-    clearInterval(walker);
-});
-process.on('SIGTERM', function() {
-    console.log("osg-btsubmit received SIGTERM");
-    clearInterval(walker);
-});
+
 
 /*
 watchr.watch({
@@ -117,15 +110,16 @@ function submit(folder, jsonpath) {
     var jsondir = path.dirname(jsonpath);
 
     function status(newstatus, msg) {
-        if(newstatus != null) {
+        console.log("test setting status"+newstatus);
+        if(newstatus) {
             if(current_status == null) {
-                //console.log("setting initial status to "+newstatus);
+                console.log("setting initial status to "+newstatus);
                 fs.renameSync(jsonpath, jsonpath+"."+newstatus);
             } else if(current_status != newstatus) {
-                //console.log("change status from "+current_status+" to "+newstatus);
+                console.log("change status from "+current_status+" to "+newstatus);
                 fs.renameSync(jsonpath+"."+current_status, jsonpath+"."+newstatus);
             } else {
-                //status hasn't changed
+                console.log("status hasn't changed");
             }
             current_status = newstatus;
         }
@@ -136,7 +130,6 @@ function submit(folder, jsonpath) {
             fs.appendFile(jsondir+'/osg.log', log+'\n', function (err) {
                 if (err) throw err;
                 console.log(log);
-
             });
         }
     }
@@ -187,9 +180,16 @@ process.on('SIGINT', function() {
     process.exit(3);
 })
 */
+
 process.on('uncaughtException', function(err) {
-    console.error('Caught exception: ' + err);
-    //btsync_server.kill('SIGHUP');
+    console.error('Caught exception (continuing): ' + err);
+});
+process.on('SIGINT', function() {
+    console.log("osg-btsubmit received SIGINT");
+    clearInterval(walker);
+});
+process.on('SIGTERM', function() {
+    console.log("osg-btsubmit received SIGTERM");
     clearInterval(walker);
 });
 

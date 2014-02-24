@@ -19,14 +19,15 @@ exports.submit = function(dir, options, status, done) {
         }
     });
     job.on('submit', function(info) {
-        console.dir(info.options);
-        status("SUBMITTED", "Echo service submitted ::" + JSON.stringify(info, undefined, 2));
+        //console.dir(info.options);
+        //don't stringify info object.. it will carash..
+        status("SUBMITTED", "Echo service submitted");
     });
     job.on('execute', function(info) {
-        status("RUNNING", "Echo job running :: "+JSON.stringify(info, undefined, 2));
+        status("RUNNING", "Echo job running :: "+JSON.stringify(info, null, 2));
     });
     job.on('imagesize', function(info) {
-        status("RUNNING", "image size :: "+JSON.stringify(info, undefined, 2));
+        status("RUNNING", "image size :: "+JSON.stringify(info, null, 2));
     });
     job.on('terminate', function(info) {
 

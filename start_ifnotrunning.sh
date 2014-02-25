@@ -4,7 +4,7 @@ BASEDIR=$(dirname $0)
 #echo $BASEDIR
 
 #start btsync if not running
-if ps -ef | grep -v grep | grep btsync ; then
+if ps -ef | grep `whoami` | grep -v grep | grep btsync ; then
         echo "btsync already running"
 else
         echo "btsync not running.. staring now"
@@ -12,7 +12,7 @@ else
 fi
 
 #btsubmit if not running
-if ps -ef | grep -v grep | grep server.js ; then
+if ps -ef | grep `whoami` | grep -v grep | grep server.js ; then
         echo "btsubmit already running"
 else
         echo "btsubmit not running.. staring now"

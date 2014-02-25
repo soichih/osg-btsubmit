@@ -5,3 +5,4 @@ bin/.sync
 bin/btsync.conf
 config.json
 nohup.out
+*.log

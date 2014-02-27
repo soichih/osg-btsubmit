@@ -5,7 +5,7 @@ exports.submit = function(dir, options, status, done) {
     console.log("echo submitting cwd:"+process.cwd());
     var workflow = new osg.Workflow();
     var job = workflow.submit({
-        executable: 'echo.wn.sh',
+        executable: __dirname+'/echo.wn.sh',
         receive: ['output.txt'],
         timeout: 60*1000, //kill job in 60 seconds
         arguments: [options.input],

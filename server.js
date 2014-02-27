@@ -140,7 +140,7 @@ function submit(folder, jsonpath) {
         var json = JSON.parse(fs.readFileSync(jsonpath));
         //console.dir(json);
 
-        //inject some other params (anti-patter?)
+        //inject some other params (should I pass via other method?)
         json.user = folder.user;
         json.project = config.project;
 

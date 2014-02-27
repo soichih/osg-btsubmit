@@ -16,5 +16,6 @@ if ps -ef | grep `whoami` | grep -v grep | grep server.js ; then
         echo "btsubmit already running"
 else
         echo "btsubmit not running.. staring now"
-        nohup node $BASEDIR/server.js > $BASEDIR/btsubmit.log &
+        cd $BASEDIR
+        nohup ~/app/node-v0.10.25-linux-x64/bin/node server.js >> btsubmit.log 2>&1 &
 fi

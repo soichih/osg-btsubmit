@@ -10,6 +10,7 @@ exports.submit = function(dir, options, status, done) {
 
     var config = merge(options, {
         rundir: dir,
+        tmpdir: "/local-scratch/"+process.env['USER']+"/tmp"
     });
     osgblast.run(config, status).then(function() {
         console.log("finished workflow");

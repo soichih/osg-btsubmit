@@ -110,7 +110,7 @@ function submit(folder, jsonpath) {
     var jsondir = path.dirname(jsonpath);
 
     function status(newstatus, msg) {
-        console.log("test setting status"+newstatus);
+        //console.log("test setting status"+newstatus);
         if(newstatus) {
             if(current_status == null) {
                 console.log("setting initial status to "+newstatus);
@@ -119,7 +119,7 @@ function submit(folder, jsonpath) {
                 console.log("change status from "+current_status+" to "+newstatus);
                 fs.renameSync(jsonpath+"."+current_status, jsonpath+"."+newstatus);
             } else {
-                console.log("status hasn't changed");
+                //console.log("status hasn't changed");
             }
             current_status = newstatus;
         }
